@@ -45,6 +45,18 @@ def update_contact(user_id):
         db.session.rollback()
         return jsonify({"message": str(e)}), 500
     
+@app.route("/delete_contact/<int:user_id>", methods=['DELETE'])
+def delete_contact(user_id):
+    contact = Contact.query.get(user_id)
+
+    if not contact:
+        return jsonify({"message": "user is not found!"}), 404
+    
+    db.session.delete(contact)
+    db.session.commit()
+
+    return jsonify({"message": "User deleted!"})
+
 
 if __name__ == "__main__":
     with app.app_context():
