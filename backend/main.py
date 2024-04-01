@@ -55,7 +55,7 @@ def delete_contact(user_id):
     db.session.delete(contact)
     db.session.commit()
 
-    return jsonify({"message": "User deleted!"})
+    return jsonify({"message": "User deleted!"}), 200
 
 
 if __name__ == "__main__":
