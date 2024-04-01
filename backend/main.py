@@ -25,6 +25,25 @@ def create_contact():
         return jsonify({"message": str(e)}), 400
     
     return jsonify({"message": "User created!"}), 201
+
+@app.route("/update_contact/<int:user_id>", methods=["PATCH"])
+def update_contact(user_id):
+    contact = Contact.query.get(user_id)
+
+    if not contact:
+        return jsonify({"message": "User not found!"}), 404
+    
+    data = request.json
+    contact.first_name = data.get("firstName", contact.first_name)
+    contact.last_name = data.get("lastName", contact.last_name)
+    contact.email = data.get("email", contact.email)
+
+    try:
+        db.session.commit()
+        return jsonify({"message": "User updated successfully!"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"message": str(e)}), 500
     
 
 if __name__ == "__main__":
