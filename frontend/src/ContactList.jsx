@@ -1,6 +1,11 @@
 import React from "react";
 
 const ContactList = ({ contacts }) => {
+  // Check if contacts is undefined or empty
+  if (!contacts || contacts.length === 0) {
+    return <div>No contacts available</div>;
+  }
+
   return (
     <div>
       <h2>Contacts</h2>
